@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Main"
+        android:icon="@drawable/culinary_navigator_main_screen"
+        android:id="@+id/main"/>
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Search results"
+        android:icon="@drawable/culinary_navigator_search_result_screen"
+        android:id="@+id/search"/>
+    <item
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:title="Favourites"
+        android:icon="@drawable/culinary_navigator_my_favourites_screen"
+        android:id="@+id/favourites"/>
+
+
+</menu>
