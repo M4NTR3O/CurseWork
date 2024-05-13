@@ -1,4 +1,4 @@
-package com.bignerdranch.android.coursework.queryDatabase
+package com.bignerdranch.android.coursework.requestDatabase
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

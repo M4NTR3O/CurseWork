@@ -2,11 +2,9 @@ package com.bignerdranch.android.coursework
 
 import android.content.Context
 import androidx.lifecycle.LiveData
-import androidx.room.Insert
-import androidx.room.Query
 import androidx.room.Room
-import com.bignerdranch.android.coursework.queryDatabase.Request
-import com.bignerdranch.android.coursework.queryDatabase.RequestDatabase
+import com.bignerdranch.android.coursework.requestDatabase.Request
+import com.bignerdranch.android.coursework.requestDatabase.RequestDatabase
 import java.util.UUID
 import java.util.concurrent.Executors
 
@@ -31,7 +29,7 @@ class RequestRepository private constructor(context: Context){
         }
     }
 
-    fun deleteRequest() = requestDao.deleteRequest()
+    fun deleteRequest(text: String) = requestDao.deleteRequest(text)
 
     fun countRequests(): Int = requestDao.countRequests()
 

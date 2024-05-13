@@ -1,8 +1,7 @@
-package com.bignerdranch.android.coursework.queryDatabase
+package com.bignerdranch.android.coursework.requestDatabase
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import java.util.UUID
@@ -15,8 +14,8 @@ interface RequestDAO {
     fun getRequest(id: UUID): LiveData<Request?>
     @Insert
     fun addRequest(request: Request)
-    @Query("DELETE FROM request WHERE id = min(id)")
-    fun deleteRequest()
+    @Query("DELETE FROM request WHERE text=(:text)")
+    fun deleteRequest(text: String)
     @Query("SELECT COUNT(*) FROM request")
     fun countRequests(): Int
 
