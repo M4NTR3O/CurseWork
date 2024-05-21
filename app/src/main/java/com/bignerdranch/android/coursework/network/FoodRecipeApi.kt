@@ -9,7 +9,7 @@ import retrofit2.http.QueryMap
 
 interface FoodRecipeApi {
 
-    @GET("/recipes/complexSearch")
-    fun getRecipes(/*@QueryMap queries: Map<String, String>*/) : Call<String>/*Response<FoodRecipe>*/
+    @GET("/recipes/complexSearch?" + "&apiKey=d981038db4b741f6b818fe7813c22e70" + "&query=pasta" +"&number=2")
+    fun getRecipes(/*@QueryMap queries: Map<String, String>*/) : Call<SpoonacularResponse>
 
 }

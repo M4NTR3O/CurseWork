@@ -41,6 +41,7 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+        
         dataModel.message.observe(this, {
             replaceFragment(SearchFragment())
             binding.bottomNavigationView.selectedItemId = R.id.search

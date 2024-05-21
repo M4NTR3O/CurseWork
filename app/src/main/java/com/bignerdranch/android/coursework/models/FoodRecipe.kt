@@ -2,7 +2,7 @@ package com.bignerdranch.android.coursework.models
 
 import com.google.gson.annotations.SerializedName
 
-data class FoodRecipe(
+data class FoodRecipe (
     @SerializedName("results")
-    val results: List<Result>
+    var results: List<Result>
 )

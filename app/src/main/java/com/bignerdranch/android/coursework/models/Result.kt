@@ -8,7 +8,7 @@ import kotlinx.parcelize.RawValue
 
 @Entity
 data class Result(
-    @SerializedName("aggregateLikes")
+    /*@SerializedName("aggregateLikes")
     val aggregateLikes: Int,
     @SerializedName("cheap")
     val cheap: Boolean,
@@ -37,5 +37,11 @@ data class Result(
     @SerializedName("vegetarian")
     val vegetarian: Boolean,
     @SerializedName("veryHealthy")
-    val veryHealthy: Boolean
+    val veryHealthy: Boolean*/
+    /*@SerializedName("id")*/
+    val id: String = "",
+    /*@SerializedName("image")*/
+    val image: String = "",
+    /*@SerializedName("title")*/
+    val title: String = ""
 )
