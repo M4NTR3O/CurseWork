@@ -43,6 +43,8 @@ class SearchFragment : Fragment() {
             Observer { recipeItems ->
                 Log.d(TAG, "Response received:$recipeItems")
             })
+        recipeViewModel =
+            ViewModelProviders.of(this).get(RecipeViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -54,7 +56,7 @@ class SearchFragment : Fragment() {
         return binding.root
     }
 
-    /*override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         dataModel.message.observe(activity as LifecycleOwner,{
             binding.searchQuery.setText(it)
@@ -84,7 +86,7 @@ class SearchFragment : Fragment() {
             val recipeItem = recipeItems[position]
             holder.bindTitle(recipeItem.title)
         }
-    }*/
+    }
 
 
     companion object {
