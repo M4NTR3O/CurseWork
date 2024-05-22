@@ -8,36 +8,30 @@ import kotlinx.parcelize.RawValue
 
 @Entity
 data class Result(
-    /*@SerializedName("aggregateLikes")
+    /*@SerializedName("aggregateLikes")*/
     val aggregateLikes: Int,
-    @SerializedName("cheap")
+   /* @SerializedName("cheap")*/
     val cheap: Boolean,
-    @SerializedName("dairyFree")
+    /*@SerializedName("dairyFree")*/
     val dairyFree: Boolean,
-    @SerializedName("extendedIngredients")
+    /*@SerializedName("extendedIngredients")*/
     val extendedIngredients: @RawValue List<ExtendedIngredient>,
-    @SerializedName("glutenFree")
+    /*@SerializedName("glutenFree")*/
     val glutenFree: Boolean,
-    @SerializedName("id")
-    val id: Int,
-    @SerializedName("image")
-    val image: String,
-    @SerializedName("readyInMinutes")
+    /*@SerializedName("readyInMinutes")*/
     val readyInMinutes: Int,
-    @SerializedName("sourceName")
+    /*@SerializedName("sourceName")*/
     val sourceName: String?,
-    @SerializedName("sourceUrl")
+    /*@SerializedName("sourceUrl")*/
     val sourceUrl: String,
-    @SerializedName("summary")
+    /*@SerializedName("summary")*/
     val summary: String,
-    @SerializedName("title")
-    val title: String,
-    @SerializedName("vegan")
+    /*@SerializedName("vegan")*/
     val vegan: Boolean,
-    @SerializedName("vegetarian")
+    /*@SerializedName("vegetarian")*/
     val vegetarian: Boolean,
-    @SerializedName("veryHealthy")
-    val veryHealthy: Boolean*/
+    /*@SerializedName("veryHealthy")*/
+    val veryHealthy: Boolean,
     /*@SerializedName("id")*/
     val id: String = "",
     /*@SerializedName("image")*/
