@@ -37,15 +37,16 @@ class SearchFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val spoonacularLiveData: LiveData<List<Result>> = SpoonacularFetchr().getRecipes()
+        /*val spoonacularLiveData: LiveData<List<Result>> = SpoonacularFetchr().searchRecipes()
         spoonacularLiveData.observe(
             this,
             Observer { recipeItems ->
                 Log.d(TAG, "Response received:$recipeItems")
-            })
+            })*/
         recipeViewModel =
             ViewModelProviders.of(this).get(RecipeViewModel::class.java)
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,6 +61,7 @@ class SearchFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         dataModel.message.observe(activity as LifecycleOwner,{
             binding.searchQuery.setText(it)
+            recipeViewModel.fetchRecipe(binding.searchQuery.text.toString())
         })
         recipeViewModel.recipeItemLiveData.observe(
             viewLifecycleOwner,
@@ -69,6 +71,9 @@ class SearchFragment : Fragment() {
                 binding.recipeRecyclerView.visibility = View.VISIBLE
             }
         )
+        binding.searchingButton.setOnClickListener {
+            recipeViewModel.fetchRecipe(binding.searchQuery.text.toString())
+        }
     }
 
     private class RecipeHolder(itemTextView: TextView) : RecyclerView.ViewHolder(itemTextView)

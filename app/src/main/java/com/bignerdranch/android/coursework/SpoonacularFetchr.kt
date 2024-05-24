@@ -6,7 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import com.bignerdranch.android.coursework.models.FoodRecipe
 import com.bignerdranch.android.coursework.models.Result
 import com.bignerdranch.android.coursework.network.FoodRecipeApi
+import com.bignerdranch.android.coursework.network.RecipeInterceptor
 import com.bignerdranch.android.coursework.network.SpoonacularResponse
+import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,17 +22,29 @@ class SpoonacularFetchr {
 
     private val foodRecipeApi: FoodRecipeApi
     init {
+        val client = OkHttpClient.Builder()
+            .addInterceptor(RecipeInterceptor())
+            .build()
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl("https://api.spoonacular.com/")
             .addConverterFactory(GsonConverterFactory.create())
+            .client(client)
             .build()
 
         foodRecipeApi = retrofit.create(FoodRecipeApi::class.java)
     }
 
-    fun getRecipes(): LiveData<List<Result>>{
+    fun searchPhotosRequest(query: String): Call<SpoonacularResponse> {
+        return foodRecipeApi.getRecipes(query)
+    }
+
+    fun searchRecipes(query: String = "pasta"): LiveData<List<Result>> {
+        return fetchRecipes(searchPhotosRequest(query))
+    }
+
+
+    fun fetchRecipes(spoonacularRequest: Call<SpoonacularResponse>): LiveData<List<Result>>{
         val responseLiveData: MutableLiveData<List<Result>> = MutableLiveData()
-        val spoonacularRequest: Call<SpoonacularResponse> = foodRecipeApi.getRecipes()
         spoonacularRequest.enqueue(object : Callback<SpoonacularResponse> {
             override fun onFailure(call:
                                    Call<SpoonacularResponse>, t: Throwable) {
@@ -40,7 +54,7 @@ class SpoonacularFetchr {
                 call: Call<SpoonacularResponse>,
                 response: Response<SpoonacularResponse>
             ) {
-                Log.d(TAG, "Response received")
+                Log.d(TAG, "Response received = ${response.body()}")
                 val spoonacularResponse: SpoonacularResponse? = response.body()
                 var recipeItems:
                         List<Result> = spoonacularResponse?.results?: mutableListOf()
