@@ -12,7 +12,7 @@ class RecipeInterceptor: Interceptor {
         val originalRequest: Request = chain.request()
         val newUrl: HttpUrl =
             originalRequest.url().newBuilder()
-                .addQueryParameter("api_key", API_KEY)
+                /*.addQueryParameter("api_key", API_KEY)*/
                 .addQueryParameter("number", "2")
                 .addQueryParameter("addRecipeInformation", "true")
                 .addQueryParameter("fillIngredients", "true")

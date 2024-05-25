@@ -34,12 +34,15 @@ class SpoonacularFetchr {
         foodRecipeApi = retrofit.create(FoodRecipeApi::class.java)
     }
 
-    fun searchPhotosRequest(query: String): Call<SpoonacularResponse> {
+    fun searchRecipesRequest(query: String): Call<SpoonacularResponse> {
         return foodRecipeApi.getRecipes(query)
     }
 
-    fun searchRecipes(query: String = "pasta"): LiveData<List<Result>> {
-        return fetchRecipes(searchPhotosRequest(query))
+    fun searchRecipes(query: String): LiveData<List<Result>> {
+        if (query == ""){
+            return fetchRecipes(searchRecipesRequest("pasta"))
+        }
+        return fetchRecipes(searchRecipesRequest(query))
     }
 
 
