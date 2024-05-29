@@ -3,12 +3,16 @@ package com.bignerdranch.android.coursework
 import android.app.FragmentManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.bignerdranch.android.coursework.databinding.ActivityMainBinding
+import com.bignerdranch.android.coursework.models.Result
 
-class MainActivity : AppCompatActivity() {
+private const val TAG = "MainActivity"
+
+class MainActivity : AppCompatActivity(), SearchFragment.Callbacks {
 
     private lateinit var binding: ActivityMainBinding
     private val dataModel: DataModel by viewModels()
@@ -46,6 +50,16 @@ class MainActivity : AppCompatActivity() {
             replaceFragment(SearchFragment())
             binding.bottomNavigationView.selectedItemId = R.id.search
         })
+    }
+
+    override fun onRecipeSelected(bundle: Result)
+    {
+        val fragment = RecipeFragment(bundle)
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.frameLayout, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     private fun replaceFragment(fragment: Fragment){

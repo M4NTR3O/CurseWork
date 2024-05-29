@@ -31,14 +31,26 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.scalars.ScalarsConverterFactory
+import java.util.UUID
 
 private const val TAG = "SearchFragment"
 
-class SearchFragment : Fragment() {
+class SearchFragment : Fragment(), RBtnClick {
 
+    interface Callbacks {
+        fun onRecipeSelected(bundle: Result)
+    }
+    private var callbacks: Callbacks? = null
     private val dataModel: DataModel by activityViewModels()
     lateinit var binding: FragmentSearchBinding
     private lateinit var recipeViewModel: RecipeViewModel
+    private val mRecipeAdapter by lazy {
+        RecipeAdapter(requireContext(), this@SearchFragment, emptyList<Result>())
+    }
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as Callbacks?
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +70,8 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
-        binding.recipeRecyclerView.layoutManager = GridLayoutManager(context, 1)
+        binding.recipeRecyclerView.adapter = mRecipeAdapter
+        binding.recipeRecyclerView.layoutManager = LinearLayoutManager(requireContext())
         return binding.root
     }
 
@@ -71,7 +84,7 @@ class SearchFragment : Fragment() {
         recipeViewModel.recipeItemLiveData.observe(
             viewLifecycleOwner,
             Observer { recipeItems ->
-                binding.recipeRecyclerView.adapter = RecipeAdapter(requireContext(), recipeItems)
+                binding.recipeRecyclerView.adapter = RecipeAdapter(requireContext(), this, recipeItems)
                 binding.recipeRecyclerView.layoutManager = LinearLayoutManager(requireContext())
                 binding.recipeRecyclerView.visibility = View.VISIBLE
             }
@@ -81,48 +94,15 @@ class SearchFragment : Fragment() {
         }
     }
 
-    private class RecipeHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-    {
-        val recipeImage: ImageView = itemView.findViewById(R.id.recipe_imageView)
-        val titleText: TextView = itemView.findViewById(R.id.title_textView)
-        val tvDescription: TextView = itemView.findViewById(R.id.description_textView)
-        val tvHeart: TextView = itemView.findViewById(R.id.heart_textView)
-        val tvClock: TextView = itemView.findViewById(R.id.clock_textView)
-        val leafImageView: ImageView = itemView.findViewById(R.id.leaf_imageView)
-        val tvLeafVegan: TextView = itemView.findViewById(R.id.leaf_textView)
-        val recipeRowLayout : ConstraintLayout = itemView.findViewById(R.id.recipesRowLayout)
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
+    }
+    override fun getRecipeOnClick(bundle: Result) {
+        Log.d(TAG, "getRecipeOnClick: $bundle")
+        callbacks?.onRecipeSelected(bundle)
     }
 
-    private class RecipeAdapter(private val context : Context, private val recipeItems: List<Result>) : RecyclerView.Adapter<RecipeHolder>()  {
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.list_item_recipes, parent, false)
-            return RecipeHolder(view)
-        }
-        override fun getItemCount(): Int = recipeItems.size
-        override fun onBindViewHolder(holder: RecipeHolder, position: Int) {
-            holder.apply {
-                val currentRecipe = recipeItems[position]
-
-                titleText.text = currentRecipe.title
-                tvDescription.text = currentRecipe.summary
-                tvHeart.text = currentRecipe.aggregateLikes.toString()
-                tvClock.text = currentRecipe.readyInMinutes.toString()
-
-                if (currentRecipe.vegan){
-                    tvLeafVegan.setTextColor(ContextCompat.getColor(context, R.color.green))
-                    leafImageView.setColorFilter(ContextCompat.getColor(context, R.color.green))
-                }
-                Picasso.get()
-                    .load(currentRecipe.image)
-                    .placeholder(R.drawable.baseline_search_24)
-                    .into(recipeImage)
-                /*recipeRowLayout.setOnClickListener {
-                    listener.getRecipeOnClick(currentRecipe)
-                }*/
-            }
-        }
-    }
 
 
     companion object {
