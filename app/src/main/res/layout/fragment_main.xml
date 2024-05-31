@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainFragment">
+    tools:context=".fragments.MainFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -20,7 +20,6 @@
             android:hint="Input query"
             android:inputType="text"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/lastSearch"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,16 +34,13 @@
             app:layout_constraintEnd_toEndOf="@+id/searchText"
             app:layout_constraintTop_toTopOf="@+id/searchText" />
 
-        <FrameLayout
-            android:id="@+id/lastSearch"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="parent">
-
-        </FrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <FrameLayout
+        android:id="@+id/lastSearch"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 
 </FrameLayout>

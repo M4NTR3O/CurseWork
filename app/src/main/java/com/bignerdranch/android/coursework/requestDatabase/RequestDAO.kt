@@ -16,7 +16,5 @@ interface RequestDAO {
     fun addRequest(request: Request)
     @Query("DELETE FROM request WHERE text=(:text)")
     fun deleteRequest(text: String)
-    @Query("SELECT COUNT(*) FROM request")
-    fun countRequests(): Int
 
 }

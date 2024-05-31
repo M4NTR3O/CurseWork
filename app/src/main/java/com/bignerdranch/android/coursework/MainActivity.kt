@@ -1,21 +1,31 @@
 package com.bignerdranch.android.coursework
 
-import android.app.FragmentManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProviders
 import com.bignerdranch.android.coursework.databinding.ActivityMainBinding
+import com.bignerdranch.android.coursework.fragments.FavouritesFragment
+import com.bignerdranch.android.coursework.fragments.MainFragment
+import com.bignerdranch.android.coursework.fragments.RecipeFragment
+import com.bignerdranch.android.coursework.fragments.RequestListFragment
+import com.bignerdranch.android.coursework.fragments.SearchFragment
 import com.bignerdranch.android.coursework.models.Result
+import com.bignerdranch.android.coursework.requestDatabase.Request
+import java.util.UUID
 
 private const val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity(), SearchFragment.Callbacks {
+class MainActivity : AppCompatActivity(), SearchFragment.Callbacks, RequestListFragment.Callbacks {
 
     private lateinit var binding: ActivityMainBinding
     private val dataModel: DataModel by viewModels()
+    private val requestListViewModel:
+            RequestListViewModel by lazy {
+        ViewModelProviders.of(this).get(RequestListViewModel::class.java)
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -52,6 +62,12 @@ class MainActivity : AppCompatActivity(), SearchFragment.Callbacks {
         })
     }
 
+    override fun onRequestSelected(request: Request) {
+        replaceFragment(SearchFragment())
+        binding.bottomNavigationView.selectedItemId = R.id.search
+        dataModel.message.value = request.text
+    }
+
     override fun onRecipeSelected(bundle: Result)
     {
         val fragment = RecipeFragment(bundle)
@@ -62,9 +78,11 @@ class MainActivity : AppCompatActivity(), SearchFragment.Callbacks {
             .commit()
     }
 
+
     private fun replaceFragment(fragment: Fragment){
         var fragmentManager = supportFragmentManager
         var fragmentTransaction = fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.frameLayout, fragment).commit()
+        Log.d(TAG, "change to ${fragment}")
     }
 }

@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.bignerdranch.android.coursework.fragments.SearchFragment
 import com.bignerdranch.android.coursework.models.Result
 import com.squareup.picasso.Picasso
 

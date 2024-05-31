@@ -1,21 +1,23 @@
-package com.bignerdranch.android.coursework
+package com.bignerdranch.android.coursework.fragments
 
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bignerdranch.android.coursework.R
+import com.bignerdranch.android.coursework.RecipeAdapter
+import com.bignerdranch.android.coursework.RecipeViewModel
+import com.bignerdranch.android.coursework.RequestListViewModel
+import com.bignerdranch.android.coursework.databinding.FragmentMainBinding
+import com.bignerdranch.android.coursework.databinding.FragmentRequestListBinding
 import com.bignerdranch.android.coursework.requestDatabase.Request
 import java.util.UUID
 
@@ -30,37 +32,39 @@ private const val TAG = "RequestListFragment"
  * Use the [RequestListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class RequestListFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+class RequestListFragment() : Fragment() {
     interface Callbacks{
-        fun onRequestSelected(requestId: UUID)
+        fun onRequestSelected(request: Request)
     }
 
     private var callbacks: Callbacks? = null
-    private lateinit var requestRecyclerView: RecyclerView
+    lateinit var binding: FragmentRequestListBinding
     private var adapter: RequestAdapter? = RequestAdapter(emptyList())
     private val requestListViewModel:
             RequestListViewModel by lazy {
-                ViewModelProviders.of(this).get(RequestListViewModel::class.java)
+        ViewModelProviders.of(this).get(RequestListViewModel::class.java)
     }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callbacks = context as Callbacks?
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+        Log.d(TAG, "Оно пыталось...")
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-       val view = inflater.inflate(R.layout.fragment_request_list, container, false)
-        requestRecyclerView = view.findViewById(R.id.request_recycler_view) as RecyclerView
-        requestRecyclerView.layoutManager = LinearLayoutManager(context)
-        requestRecyclerView.adapter = adapter
-        return view
+        Log.d(TAG, "Оно пыталось...")
+        binding = FragmentRequestListBinding.inflate(inflater, container, false)
+        binding.requestRecyclerView.layoutManager = LinearLayoutManager(context)
+        binding.requestRecyclerView.adapter = adapter
+        return binding.root
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -68,8 +72,11 @@ class RequestListFragment : Fragment() {
             viewLifecycleOwner,
             Observer{ requests ->
                 requests?.let {
-                    Log.i(TAG, "Got request${requests.size}")
-                    updateUI(requests)
+                    Log.d(TAG, "Оно пыталось...")
+                    adapter = RequestAdapter(requests)
+                    binding.requestRecyclerView.adapter = adapter
+                    binding.requestRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+                    binding.requestRecyclerView.visibility = View.VISIBLE
                 }
             })
     }
@@ -88,10 +95,6 @@ class RequestListFragment : Fragment() {
             else -> return super.onOptionsItemSelected(item)
         }
     }*/
-    private fun updateUI(requests: List<Request>) {
-        adapter = RequestAdapter(requests)
-        requestRecyclerView.adapter = adapter
-    }
 
     private inner class RequestHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         private lateinit var request: Request
@@ -108,7 +111,7 @@ class RequestListFragment : Fragment() {
         }
 
         override fun onClick(v: View?) {
-            callbacks?.onRequestSelected(request.id)
+            callbacks?.onRequestSelected(request)
         }
     }
     private inner class RequestAdapter(var request: List<Request>): RecyclerView.Adapter<RequestHolder>(){
@@ -123,7 +126,6 @@ class RequestListFragment : Fragment() {
             holder.bind(crime)
         }
     }
-
     companion object {
         /**
          * Use this factory method to create a new instance of

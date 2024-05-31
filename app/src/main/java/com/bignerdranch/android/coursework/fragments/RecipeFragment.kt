@@ -1,4 +1,4 @@
-package com.bignerdranch.android.coursework
+package com.bignerdranch.android.coursework.fragments
 
 import android.os.Bundle
 import android.provider.SyncStateContract

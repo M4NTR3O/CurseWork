@@ -1,10 +1,8 @@
-package com.bignerdranch.android.coursework
+package com.bignerdranch.android.coursework.requestDatabase
 
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.room.Room
-import com.bignerdranch.android.coursework.requestDatabase.Request
-import com.bignerdranch.android.coursework.requestDatabase.RequestDatabase
 import java.util.UUID
 import java.util.concurrent.Executors
 
@@ -30,8 +28,6 @@ class RequestRepository private constructor(context: Context){
     }
 
     fun deleteRequest(text: String) = requestDao.deleteRequest(text)
-
-    fun countRequests(): Int = requestDao.countRequests()
 
     companion object {
         private var INSTANCE: RequestRepository? = null
