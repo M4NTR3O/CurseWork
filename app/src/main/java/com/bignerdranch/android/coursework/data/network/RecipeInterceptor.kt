@@ -1,4 +1,4 @@
-package com.bignerdranch.android.coursework.network
+package com.bignerdranch.android.coursework.data.network
 
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
@@ -13,7 +13,7 @@ class RecipeInterceptor: Interceptor {
         val newUrl: HttpUrl =
             originalRequest.url().newBuilder()
                 /*.addQueryParameter("api_key", API_KEY)*/
-                .addQueryParameter("number", "2")
+                .addQueryParameter("number", "10")
                 .addQueryParameter("addRecipeInformation", "true")
                 .addQueryParameter("fillIngredients", "true")
                 .build()

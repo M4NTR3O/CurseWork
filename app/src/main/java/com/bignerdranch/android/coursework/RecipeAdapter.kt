@@ -21,7 +21,6 @@ class RecipeAdapter(private val context : Context, private val listener : Search
 
     inner class RecipeHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
-        private lateinit var recipe: Result
         val recipeImage: ImageView = itemView.findViewById(R.id.recipe_imageView)
         val titleText: TextView = itemView.findViewById(R.id.title_textView)
         val tvDescription: TextView = itemView.findViewById(R.id.description_textView)

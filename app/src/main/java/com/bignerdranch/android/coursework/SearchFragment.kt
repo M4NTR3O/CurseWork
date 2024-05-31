@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.coursework.databinding.FragmentSearchBinding
 import com.bignerdranch.android.coursework.databinding.ListItemRequestBinding
 import com.bignerdranch.android.coursework.models.Result
-import com.bignerdranch.android.coursework.network.FoodRecipeApi
+import com.bignerdranch.android.coursework.data.network.FoodRecipeApi
 import com.squareup.picasso.Picasso
 import retrofit2.Call
 import retrofit2.Callback
@@ -72,6 +72,7 @@ class SearchFragment : Fragment(), RBtnClick {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         binding.recipeRecyclerView.adapter = mRecipeAdapter
         binding.recipeRecyclerView.layoutManager = LinearLayoutManager(requireContext())
+
         return binding.root
     }
 

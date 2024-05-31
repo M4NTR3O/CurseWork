@@ -1,6 +1,5 @@
-package com.bignerdranch.android.coursework.network
+package com.bignerdranch.android.coursework.data.network
 
-import com.bignerdranch.android.coursework.models.FoodRecipe
 import com.bignerdranch.android.coursework.models.Result
 import com.google.gson.annotations.SerializedName
 

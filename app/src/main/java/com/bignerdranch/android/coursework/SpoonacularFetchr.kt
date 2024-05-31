@@ -3,18 +3,16 @@ package com.bignerdranch.android.coursework
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.bignerdranch.android.coursework.models.FoodRecipe
 import com.bignerdranch.android.coursework.models.Result
-import com.bignerdranch.android.coursework.network.FoodRecipeApi
-import com.bignerdranch.android.coursework.network.RecipeInterceptor
-import com.bignerdranch.android.coursework.network.SpoonacularResponse
+import com.bignerdranch.android.coursework.data.network.FoodRecipeApi
+import com.bignerdranch.android.coursework.data.network.RecipeInterceptor
+import com.bignerdranch.android.coursework.data.network.SpoonacularResponse
 import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
 
 private const val TAG = "SpoonacularFetchr"
 
@@ -42,7 +40,7 @@ class SpoonacularFetchr {
         if (query == ""){
             return fetchRecipes(searchRecipesRequest("pasta"))
         }
-        return fetchRecipes(searchRecipesRequest(query))
+        else return fetchRecipes(searchRecipesRequest(query))
     }
 
 
@@ -67,4 +65,5 @@ class SpoonacularFetchr {
         return responseLiveData
 
     }
+
 }
