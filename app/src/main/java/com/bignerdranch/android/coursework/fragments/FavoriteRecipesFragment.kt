@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bignerdranch.android.coursework.BtnClick
@@ -22,7 +23,9 @@ import com.google.android.material.snackbar.Snackbar
 
 class FavoriteRecipesFragment: Fragment(), BtnClick {
     private lateinit var binding: FragmentFavouritesBinding
-    private val mainViewModel: MainViewModel by viewModels()
+    private val mainViewModel: MainViewModel by lazy {
+        ViewModelProviders.of(this).get(MainViewModel::class.java)
+    }
     private val favoriteAdapter: FavoriteRecipeAdapter by lazy {
         FavoriteRecipeAdapter(
             requireContext(),

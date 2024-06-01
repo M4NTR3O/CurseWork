@@ -3,11 +3,13 @@ package com.bignerdranch.android.coursework.data
 import android.content.Context
 import androidx.room.Room
 import com.bignerdranch.android.coursework.data.database.RecipesDatabase
+import com.bignerdranch.android.coursework.data.database.entities.FavoritesEntity
 import com.bignerdranch.android.coursework.data.network.FoodRecipeApi
 import com.bignerdranch.android.coursework.data.network.RecipeInterceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.Executors
 
 const val DATABASE_NAME = "recipes_database"
 class Repository private constructor(context: Context) {
@@ -34,6 +36,18 @@ class Repository private constructor(context: Context) {
 
     val remote = RemoteDataSource(foodRecipeApi)
     val local = LocalDataSource(database.recipesDao())
+    private val executor = Executors.newSingleThreadExecutor()
+
+    fun insertFavoriteRecipes(favoritesEntity: FavoritesEntity){
+        executor.execute {
+            local.insertFavoriteRecipes(favoritesEntity)
+        }
+    }
+    fun deleteFavoriteRecipes(favoritesEntity: FavoritesEntity){
+        executor.execute {
+            local.deleteFavoriteRecipes(favoritesEntity)
+        }
+    }
     companion object {
         private var INSTANCE: Repository? = null
         fun initialize(context: Context) {

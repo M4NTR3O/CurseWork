@@ -38,12 +38,12 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     fun insertRecipes(recipesEntity: RecipesEntity) = repository.local.insertRecipes(recipesEntity)
 
     fun insertFavoriteRecipes(favoritesEntity: FavoritesEntity) {
-        repository.local.insertFavoriteRecipes(favoritesEntity)
+        repository.insertFavoriteRecipes(favoritesEntity)
     }
 
 
     fun deleteFavoriteRecipes(favoritesEntity: FavoritesEntity) {
-        repository.local.deleteFavoriteRecipes(favoritesEntity)
+        repository.deleteFavoriteRecipes(favoritesEntity)
     }
 
     fun deleteAllFavoriteRecipes() {
