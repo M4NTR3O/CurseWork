@@ -19,7 +19,7 @@ import java.util.UUID
 
 private const val TAG = "MainActivity"
 
-class MainActivity : AppCompatActivity(), SearchFragment.Callbacks, RequestListFragment.Callbacks {
+class MainActivity : AppCompatActivity(), SearchFragment.Callbacks, RequestListFragment.Callbacks, FavoriteRecipesFragment.Callbacks {
 
     private lateinit var binding: ActivityMainBinding
     private val dataModel: DataModel by viewModels()
@@ -75,6 +75,11 @@ class MainActivity : AppCompatActivity(), SearchFragment.Callbacks, RequestListF
 
     override fun onRecipeSelected(bundle: Bundle)
     {
+        intent = DetailsActivity.newIntent(this@MainActivity, bundle)
+        startActivity(intent)
+    }
+
+    override fun onRowClick(bundle: Bundle){
         intent = DetailsActivity.newIntent(this@MainActivity, bundle)
         startActivity(intent)
     }

@@ -1,6 +1,8 @@
 package com.bignerdranch.android.coursework.fragments
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -22,6 +24,10 @@ import com.bignerdranch.android.coursework.models.Result
 import com.google.android.material.snackbar.Snackbar
 
 class FavoriteRecipesFragment: Fragment(), BtnClick {
+    interface Callbacks {
+        fun onRowClick(bundle: Bundle)
+    }
+    private var callbacks: Callbacks? = null
     private lateinit var binding: FragmentFavouritesBinding
     private val mainViewModel: MainViewModel by lazy {
         ViewModelProviders.of(this).get(MainViewModel::class.java)
@@ -35,6 +41,10 @@ class FavoriteRecipesFragment: Fragment(), BtnClick {
         )
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        callbacks = context as FavoriteRecipesFragment.Callbacks?
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -86,9 +96,13 @@ class FavoriteRecipesFragment: Fragment(), BtnClick {
     }
 
     override fun onRowClick(result: Result) {
-        val action =
-            FavouritesFragmentDirections.actionFavoriteRecipesFragmentToDetailsActivity(result)
-        findNavController().navigate(action)
+        var newBundle = Bundle()
+        newBundle.putParcelable("result", result)
+        callbacks?.onRowClick(newBundle)
+    }
+    override fun onDetach() {
+        super.onDetach()
+        callbacks = null
     }
 
     override fun onDestroy() {
