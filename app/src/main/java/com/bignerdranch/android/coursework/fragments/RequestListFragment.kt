@@ -84,17 +84,6 @@ class RequestListFragment() : Fragment() {
         super.onDetach()
         callbacks = null
     }
-    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.new_request -> {
-                val request = Request()
-                requestListViewModel.addRequest(request)
-                callbacks?.onRequestSelected(request.id)
-                true
-            }
-            else -> return super.onOptionsItemSelected(item)
-        }
-    }*/
 
     private inner class RequestHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {
         private lateinit var request: Request

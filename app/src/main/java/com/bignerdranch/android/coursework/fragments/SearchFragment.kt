@@ -84,6 +84,7 @@ class SearchFragment : Fragment(), RBtnClick {
         )
         binding.searchingButton.setOnClickListener {
             recipeViewModel.fetchRecipe(binding.searchQuery.text.toString())
+            requestListViewModel.deleteRequestCount()
             var request = Request()
             request.text = binding.searchQuery.text.toString()
             requestListViewModel.addRequest(request)

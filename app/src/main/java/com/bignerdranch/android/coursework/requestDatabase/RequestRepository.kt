@@ -27,7 +27,17 @@ class RequestRepository private constructor(context: Context){
         }
     }
 
-    fun deleteRequest(text: String) = requestDao.deleteRequest(text)
+    fun deleteRequest(request: Request){
+        executor.execute {
+            requestDao.deleteRequest(request.id)
+        }
+    }
+
+    fun deleteRequestCount(){
+        executor.execute(){
+            requestDao.deleteRequestCount()
+        }
+    }
 
     companion object {
         private var INSTANCE: RequestRepository? = null

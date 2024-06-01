@@ -64,6 +64,7 @@ class MainFragment : Fragment() {
 
         binding.searchButton.setOnClickListener{
             dataModel.message.value = binding.searchText.text.toString()
+            requestListViewModel.deleteRequestCount()
             var request = Request()
             request.text = binding.searchText.text.toString()
             requestListViewModel.addRequest(request)

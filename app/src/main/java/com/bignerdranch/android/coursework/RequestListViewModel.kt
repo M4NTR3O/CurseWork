@@ -10,6 +10,13 @@ class RequestListViewModel: ViewModel() {
 
     fun addRequest(request: Request){
         requestRepository.addRequest(request)
-        /*requestRepository.deleteRequest()*/
+    }
+
+    fun deleteRequestCount(){
+        requestRepository.deleteRequestCount()
+    }
+
+    fun deleteRequest(request: Request){
+        requestRepository.deleteRequest(request)
     }
 }

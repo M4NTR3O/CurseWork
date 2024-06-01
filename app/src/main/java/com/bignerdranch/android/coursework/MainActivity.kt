@@ -64,8 +64,12 @@ class MainActivity : AppCompatActivity(), SearchFragment.Callbacks, RequestListF
 
     override fun onRequestSelected(request: Request) {
         replaceFragment(SearchFragment())
+        requestListViewModel.deleteRequest(request)
         binding.bottomNavigationView.selectedItemId = R.id.search
         dataModel.message.value = request.text
+        var newRequest = Request()
+        newRequest.text = request.text
+        requestListViewModel.addRequest(newRequest)
     }
 
     override fun onRecipeSelected(bundle: Result)
