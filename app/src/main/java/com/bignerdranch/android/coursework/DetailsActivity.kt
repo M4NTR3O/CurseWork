@@ -1,6 +1,9 @@
 package com.bignerdranch.android.coursework
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -9,21 +12,28 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.navArgs
 import com.bignerdranch.android.coursework.data.database.entities.FavoritesEntity
 import com.bignerdranch.android.coursework.databinding.ActivityDetailsBinding
 import com.bignerdranch.android.coursework.fragments.IngredientsFragment
 import com.bignerdranch.android.coursework.fragments.InstructionFragment
 import com.bignerdranch.android.coursework.fragments.OverviewFragment
+import com.bignerdranch.android.coursework.models.Result
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
+import java.io.Serializable
 
 private const val TAG = "DetailsActivity"
+private const val BUNDLE = "bundle"
+private const val RESULT = "result"
 
 class DetailsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailsBinding
-    private val args by navArgs<DetailsActivityArgs>()
-    private val mainViewModel: MainViewModel by viewModels()
+    private lateinit var args: Result
+    private val mainViewModel: MainViewModel by lazy {
+        ViewModelProviders.of(this).get(MainViewModel::class.java)
+    }
     private var recipeSaved = false
     private var savedRecipeId = 0
     private lateinit var menuItem: MenuItem
@@ -31,15 +41,17 @@ class DetailsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        Log.d(TAG, "bundle = ${intent.getBundleExtra(BUNDLE)}")
+        Log.d(TAG, "result = ${intent.getBundleExtra(BUNDLE)?.getParcelable<Result>(RESULT)}")
+        args = intent.getBundleExtra(BUNDLE)?.getParcelable<Result>(RESULT) as Result
         setSupportActionBar(binding.toolbar)
         binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.white))
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val fragments = ArrayList<Fragment>()
-        fragments.add(OverviewFragment())
-        fragments.add(IngredientsFragment())
-        fragments.add(InstructionFragment())
+        fragments.add(OverviewFragment(args))
+        fragments.add(IngredientsFragment(args))
+        fragments.add(InstructionFragment(args))
 
         val titles = ArrayList<String>()
         titles.add("Overview")
@@ -83,7 +95,7 @@ class DetailsActivity : AppCompatActivity() {
         mainViewModel.readFavoriteRecipe.observe(this, Observer { favoritesEntity ->
             try {
                 for (saveRecipe in favoritesEntity) {
-                    if (saveRecipe.result.id == args.result.id) {
+                    if (saveRecipe.result.id == args.id) {
                         changeMenuItemColor(menuItem, R.color.yellow)
                         savedRecipeId = saveRecipe.id
                         recipeSaved = true
@@ -96,7 +108,7 @@ class DetailsActivity : AppCompatActivity() {
     }
 
     private fun saveToFavorites(item: MenuItem) {
-        val favoritesEntity = FavoritesEntity(0, args.result)
+        val favoritesEntity = FavoritesEntity(0, args)
         mainViewModel.insertFavoriteRecipes(favoritesEntity)
         changeMenuItemColor(item, R.color.yellow)
         showSnackBar("Recipe Saved")
@@ -107,7 +119,7 @@ class DetailsActivity : AppCompatActivity() {
     private fun removeFromFavorite(item: MenuItem) {
         val favoritesEntity = FavoritesEntity(
             savedRecipeId,
-            args.result
+            args
         )
         mainViewModel.deleteFavoriteRecipes(favoritesEntity)
         changeMenuItemColor(item, R.color.white)
@@ -127,5 +139,12 @@ class DetailsActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         changeMenuItemColor(menuItem, R.color.white)
+    }
+    companion object{
+        fun newIntent(packageContext: Context, bundle: Bundle): Intent {
+            return Intent(packageContext, DetailsActivity::class.java).apply {
+                putExtra(BUNDLE, bundle)
+            }
+        }
     }
 }

@@ -1,11 +1,12 @@
 package com.bignerdranch.android.coursework.models
 
+import android.os.Parcel
 import android.os.Parcelable
 import androidx.room.Entity
-import com.google.gson.annotations.SerializedName
-import kotlinx.parcelize.Parcelize
+import kotlinx.android.parcel.Parcelize
 import kotlinx.parcelize.RawValue
 
+@Parcelize
 @Entity
 data class Result(
     /*@SerializedName("aggregateLikes")*/
@@ -38,4 +39,5 @@ data class Result(
     val image: String = "",
     /*@SerializedName("title")*/
     val title: String = ""
-)
+): Parcelable{
+}

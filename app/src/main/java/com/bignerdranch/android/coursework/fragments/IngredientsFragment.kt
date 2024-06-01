@@ -11,7 +11,7 @@ import com.bignerdranch.android.coursework.databinding.FragmentIngredientsBindin
 import com.bignerdranch.android.coursework.models.Result
 
 private const val TAG = "IngredientsFragment"
-class IngredientsFragment : Fragment() {
+class IngredientsFragment(var args: Result) : Fragment() {
 
     private lateinit var binding: FragmentIngredientsBinding
     private val mAdapter: IngredientsAdapter by lazy {
@@ -26,7 +26,7 @@ class IngredientsFragment : Fragment() {
         binding = FragmentIngredientsBinding.inflate(inflater, container, false)
         setupRecyclerView()
 
-        val myBundle: Result = arguments as Result
+        val myBundle: Result = args
 
         myBundle.extendedIngredients.let {
             mAdapter.setData(it)

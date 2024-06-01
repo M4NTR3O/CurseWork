@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.bignerdranch.android.coursework.databinding.FragmentInstructionBinding
 import com.bignerdranch.android.coursework.models.Result
 
-class InstructionFragment : Fragment() {
+class InstructionFragment(var args: Result) : Fragment() {
 
     private lateinit var binding: FragmentInstructionBinding
     override fun onCreateView(
@@ -19,8 +19,7 @@ class InstructionFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentInstructionBinding.inflate(inflater, container, false)
 
-        val args = arguments
-        val myBundle: Result = args?.getBundle("recipesBundle") as Result
+        val myBundle: Result = args
 
         binding.instructionWebView.webViewClient = object : WebViewClient(){}
         binding.instructionWebView.loadUrl(myBundle.sourceUrl)

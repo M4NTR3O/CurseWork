@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import com.bignerdranch.android.coursework.databinding.ActivityMainBinding
+import com.bignerdranch.android.coursework.fragments.FavoriteRecipesFragment
 import com.bignerdranch.android.coursework.fragments.FavouritesFragment
 import com.bignerdranch.android.coursework.fragments.MainFragment
 import com.bignerdranch.android.coursework.fragments.RecipeFragment
@@ -35,7 +36,7 @@ class MainActivity : AppCompatActivity(), SearchFragment.Callbacks, RequestListF
             item ->
             when(item.itemId) {
                 R.id.favourites -> {
-                    replaceFragment(FavouritesFragment())
+                    replaceFragment(FavoriteRecipesFragment())
                     true
                 }
 
@@ -72,14 +73,10 @@ class MainActivity : AppCompatActivity(), SearchFragment.Callbacks, RequestListF
         requestListViewModel.addRequest(newRequest)
     }
 
-    override fun onRecipeSelected(bundle: Result)
+    override fun onRecipeSelected(bundle: Bundle)
     {
-        val fragment = RecipeFragment(bundle)
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.frameLayout, fragment)
-            .addToBackStack(null)
-            .commit()
+        intent = DetailsActivity.newIntent(this@MainActivity, bundle)
+        startActivity(intent)
     }
 
 

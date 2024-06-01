@@ -10,6 +10,7 @@ class CulinaryNavigatorApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         RequestRepository.initialize(this)
+        Repository.initialize(this)
         Log.d(TAG, RequestRepository.get().toString())
     }
 }

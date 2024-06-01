@@ -5,6 +5,7 @@ import androidx.room.Entity
 import com.google.gson.annotations.SerializedName
 import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity
 data class ExtendedIngredient(
     @SerializedName("amount")
@@ -19,4 +20,6 @@ data class ExtendedIngredient(
     val original: String,
     @SerializedName("unit")
     val unit: String
-)
+): Parcelable{
+
+}

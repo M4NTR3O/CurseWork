@@ -16,7 +16,7 @@ import org.jsoup.Jsoup
 
 private const val TAG = "OverViewFragment"
 
-class OverviewFragment : Fragment() {
+class OverviewFragment(val args: Result) : Fragment() {
 
     private lateinit var binding: FragmentOverviewBinding
 
@@ -27,8 +27,7 @@ class OverviewFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentOverviewBinding.inflate(inflater, container, false)
 
-        val args = arguments
-        val myBundle: Result = args?.getBundle("recipesBundle") as Result
+        val myBundle: Result = args
 
         Picasso.get()
             .load(myBundle.image)

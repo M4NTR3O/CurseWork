@@ -2,6 +2,7 @@ package com.bignerdranch.android.coursework.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -26,7 +27,7 @@ private const val TAG = "SearchFragment"
 class SearchFragment : Fragment(), RBtnClick {
 
     interface Callbacks {
-        fun onRecipeSelected(bundle: Result)
+        fun onRecipeSelected(bundle: Bundle)
     }
     private var callbacks: Callbacks? = null
     private val dataModel: DataModel by activityViewModels()
@@ -46,12 +47,6 @@ class SearchFragment : Fragment(), RBtnClick {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-/*        val spoonacularLiveData: LiveData<List<Result>> = SpoonacularFetchr().searchRecipes("")
-        spoonacularLiveData.observe(
-            this,
-            Observer { recipeItems ->
-                Log.d(TAG, "Response received:$recipeItems")
-            })*/
         recipeViewModel =
             ViewModelProviders.of(this).get(RecipeViewModel::class.java)
     }
@@ -96,8 +91,10 @@ class SearchFragment : Fragment(), RBtnClick {
         callbacks = null
     }
     override fun getRecipeOnClick(bundle: Result) {
-        Log.d(TAG, "getRecipeOnClick: $bundle")
-        callbacks?.onRecipeSelected(bundle)
+        var newBundle = Bundle()
+        newBundle.putParcelable("result", bundle)
+        Log.d(TAG, "getRecipeOnClick: $newBundle")
+        callbacks?.onRecipeSelected(newBundle)
     }
 
 

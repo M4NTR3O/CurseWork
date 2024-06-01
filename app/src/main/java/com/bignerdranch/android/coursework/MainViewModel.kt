@@ -8,10 +8,15 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
+import com.bignerdranch.android.coursework.data.LocalDataSource
+import com.bignerdranch.android.coursework.data.RemoteDataSource
 import com.bignerdranch.android.coursework.data.Repository
+import com.bignerdranch.android.coursework.data.database.RecipesDao
 import com.bignerdranch.android.coursework.data.database.entities.FavoritesEntity
 import com.bignerdranch.android.coursework.data.database.entities.RecipesEntity
+import com.bignerdranch.android.coursework.data.network.FoodRecipeApi
 import com.bignerdranch.android.coursework.data.network.SpoonacularResponse
 import com.bignerdranch.android.coursework.models.Result
 import retrofit2.Call
@@ -20,10 +25,9 @@ import retrofit2.Response
 
 private const val TAG = "MainViewModel"
 
-class MainViewModel(
-    private val repository: Repository,
-    application: Application
-) : AndroidViewModel(application) {
+class MainViewModel(application: Application): AndroidViewModel(application) {
+
+    private val repository = Repository.get()
 
     /** Room Database */
 
