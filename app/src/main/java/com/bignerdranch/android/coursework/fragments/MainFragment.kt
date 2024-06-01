@@ -66,6 +66,7 @@ class MainFragment : Fragment() {
             dataModel.message.value = binding.searchText.text.toString()
             var request = Request()
             request.text = binding.searchText.text.toString()
+            requestListViewModel.addRequest(request)
         }
     }
 

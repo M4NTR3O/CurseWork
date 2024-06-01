@@ -16,8 +16,10 @@ import com.bignerdranch.android.coursework.DataModel
 import com.bignerdranch.android.coursework.RBtnClick
 import com.bignerdranch.android.coursework.RecipeAdapter
 import com.bignerdranch.android.coursework.RecipeViewModel
+import com.bignerdranch.android.coursework.RequestListViewModel
 import com.bignerdranch.android.coursework.databinding.FragmentSearchBinding
 import com.bignerdranch.android.coursework.models.Result
+import com.bignerdranch.android.coursework.requestDatabase.Request
 
 private const val TAG = "SearchFragment"
 
@@ -32,6 +34,10 @@ class SearchFragment : Fragment(), RBtnClick {
     private lateinit var recipeViewModel: RecipeViewModel
     private val mRecipeAdapter by lazy {
         RecipeAdapter(requireContext(), this@SearchFragment, emptyList<Result>())
+    }
+    private val requestListViewModel:
+            RequestListViewModel by lazy {
+        ViewModelProviders.of(this).get(RequestListViewModel::class.java)
     }
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -78,6 +84,9 @@ class SearchFragment : Fragment(), RBtnClick {
         )
         binding.searchingButton.setOnClickListener {
             recipeViewModel.fetchRecipe(binding.searchQuery.text.toString())
+            var request = Request()
+            request.text = binding.searchQuery.text.toString()
+            requestListViewModel.addRequest(request)
         }
     }
 
