@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.coursework.fragments.SearchFragment
 import com.bignerdranch.android.coursework.models.Result
 import com.squareup.picasso.Picasso
+import org.jsoup.Jsoup
 
 interface RBtnClick
 {
@@ -42,7 +43,7 @@ class RecipeAdapter(private val context : Context, private val listener : Search
             val currentRecipe = recipeItems[position]
 
             titleText.text = currentRecipe.title
-            tvDescription.text = currentRecipe.summary
+            tvDescription.text = Jsoup.parse(currentRecipe.summary).text()
             tvHeart.text = currentRecipe.aggregateLikes.toString()
             tvClock.text = currentRecipe.readyInMinutes.toString()
 
