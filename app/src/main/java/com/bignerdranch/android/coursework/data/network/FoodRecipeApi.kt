@@ -7,10 +7,10 @@ import retrofit2.http.Query
 
 interface FoodRecipeApi {
 
-    @GET("/recipes/complexSearch?apiKey=c385209d65ef47a98f824b152c1204c7")
+    @GET("/recipes/complexSearch?apiKey=d981038db4b741f6b818fe7813c22e70")
     fun getRecipes(@Query("query") query: String) : Call<SpoonacularResponse>
 
-    @GET("/recipes/complexSearch?apiKey=c385209d65ef47a98f824b152c1204c7")
+    @GET("/recipes/complexSearch?apiKey=d981038db4b741f6b818fe7813c22e70")
     fun searchRecipes(@Query("query") query: String) : Call<SpoonacularResponse>
 
 }

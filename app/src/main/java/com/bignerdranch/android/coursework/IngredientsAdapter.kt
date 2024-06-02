@@ -35,7 +35,7 @@ class IngredientsAdapter(private val context: Context) :
         holder.apply {
             val currentIngredient = ingredientList[position]
             Picasso.get()
-                .load(currentIngredient.image)
+                .load("https://img.spoonacular.com/ingredients_100x100/" + currentIngredient.image)
                 .placeholder(R.drawable.baseline_search_24)
                 .into(ingredientImageView)
 
