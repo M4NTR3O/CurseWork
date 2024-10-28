@@ -54,9 +54,9 @@ class DetailsActivity : AppCompatActivity() {
         fragments.add(InstructionFragment(args))
 
         val titles = ArrayList<String>()
-        titles.add("Overview")
-        titles.add("Ingredients")
-        titles.add("Instructions")
+        titles.add(getString(R.string.overview))
+        titles.add(getString(R.string.ingredients))
+        titles.add(getString(R.string.instruction))
 
 
         val resultBundle = Bundle()
@@ -111,7 +111,7 @@ class DetailsActivity : AppCompatActivity() {
         val favoritesEntity = FavoritesEntity(0, args)
         mainViewModel.insertFavoriteRecipes(favoritesEntity)
         changeMenuItemColor(item, R.color.yellow)
-        showSnackBar("Recipe Saved")
+        showSnackBar(getString(R.string.saved))
         recipeSaved = true
 
     }
@@ -123,12 +123,12 @@ class DetailsActivity : AppCompatActivity() {
         )
         mainViewModel.deleteFavoriteRecipes(favoritesEntity)
         changeMenuItemColor(item, R.color.white)
-        showSnackBar("Removed from Favorites.")
+        showSnackBar(getString(R.string.removed))
         recipeSaved = false
     }
 
     private fun showSnackBar(message: String) {
-        Snackbar.make(binding.detailsLayout, message, Snackbar.LENGTH_SHORT).setAction("Okay") {}
+        Snackbar.make(binding.detailsLayout, message, Snackbar.LENGTH_SHORT).setAction(getString(R.string.okay)) {}
             .show()
     }
 

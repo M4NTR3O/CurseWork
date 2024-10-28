@@ -1,7 +1,15 @@
 <resources>
     <string name="app_name">Culinary Navigator</string>
     <!-- TODO: Remove or change this placeholder text -->
+    <string name="title" translatable="false">Title</string>
+    <string name="name" translatable="false">Name</string>
+    <string name="grams" translatable="false">Grams</string>
+    <string name="consistency" translatable="false">Consistency</string>
+    <string name="original" translatable="false">Original</string>
+    <string name="textView" translatable="false">TextView</string>
+    <string name="requestTitle" translatable="false">Request Title</string>
     <string name="click_button">Click to search</string>
+    <string name="inputQuery">Input query</string>
     <string name="cheap">Cheap</string>
     <string name="healthy">Healthy</string>
     <string name="dairy_free">Dairy Free</string>
@@ -9,11 +17,22 @@
     <string name="no_favorite_recipes">No Favorite Recipes.</string>
     <string name="delete_favorite_menu">Delete Favorite Menu</string>
     <string name="delete_all">Delete All</string>
-    <string name="lorem_ipsum">Lorem ipsum dolor sit amet,et cons Ac turpienectus et netus et malesuada.</string>
+    <string name="lorem_ipsum" translatable="false">Lorem ipsum dolor sit amet,et cons Ac turpienectus et netus et malesuada.</string>
+    <string name="loremIpsum" translatable="false">Lorem ipsum </string>
     <string name="error">Error</string>
     <string name="share">share</string>
     <string name="recipesbottomsheet">RecipesBottomSheet</string>
     <string name="vegetarian">Vegetarian</string>
     <string name="vegan">Vegan</string>
     <string name="gluten_free">Gluten Free</string>
+    <string name="main">Main</string>
+    <string name="searchResult">Search result</string>
+    <string name="favoriteRecipes">Favorites</string>
+    <string name="hundred" translatable="false">100</string>
+    <string name="saved">Recipe Saved</string>
+    <string name="removed">Removed from Favorites.</string>
+    <string name="overview">Overview</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="instruction">Instructions</string>
+    <string name="okay" translatable="false">OK</string>
 </resources>

@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Кулинарный навигатор</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="click_button">Нажмите для поиска</string>
+    <string name="inputQuery">Введите запрос (на английском)</string>
+    <string name="cheap">Дешёвый</string>
+    <string name="healthy">Полезный</string>
+    <string name="dairy_free">Без молочных продуктов</string>
+    <string name="save_to_favorites">Сохранить в избранное</string>
+    <string name="no_favorite_recipes">Нет избранных рецептов.</string>
+    <string name="delete_favorite_menu">Удалить из избранных</string>
+    <string name="delete_all">Удалить всё</string>
+    <string name="error">Ошибка</string>
+    <string name="share">Поделиться</string>
+    <string name="recipesbottomsheet">RecipesBottomSheet</string>
+    <string name="vegetarian">Вегетарианский</string>
+    <string name="vegan">Веганский</string>
+    <string name="gluten_free">Без глютена</string>
+    <string name="main">Главная</string>
+    <string name="searchResult">Результат поиска</string>
+    <string name="favoriteRecipes">Избранные</string>
+    <string name="saved">Рецепт сохранён</string>
+    <string name="removed">Удалён из избранных</string>
+    <string name="overview">Обзор</string>
+    <string name="ingredients">Ингредиенты</string>
+    <string name="instruction">Инструкция</string>
+</resources>

@@ -4,19 +4,19 @@
     <item
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:title="Main"
+        android:title="@string/main"
         android:icon="@drawable/baseline_home_24"
         android:id="@+id/main"/>
     <item
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:title="Search results"
+        android:title="@string/searchResult"
         android:icon="@drawable/culinary_navigator_search_result_screen"
         android:id="@+id/search"/>
     <item
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:title="Favourites"
+        android:title="@string/favoriteRecipes"
         android:icon="@drawable/baseline_favorite_24"
         android:id="@+id/favourites"/>
 

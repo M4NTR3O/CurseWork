@@ -53,7 +53,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
-                android:text="Name"
+                android:text="@string/name"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="@color/titleColor"
@@ -66,7 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:text="100"
+                android:text="@string/hundred"
                 app:layout_constraintStart_toStartOf="@+id/ingredient_name"
                 app:layout_constraintTop_toBottomOf="@+id/ingredient_name" />
 
@@ -75,7 +75,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:text="Grams"
+                android:text="@string/grams"
                 app:layout_constraintBottom_toBottomOf="@+id/ingredient_amount"
                 app:layout_constraintStart_toEndOf="@+id/ingredient_amount"
                 app:layout_constraintTop_toTopOf="@+id/ingredient_amount" />
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
-                android:text="Consistency"
+                android:text="@string/consistency"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/ingredient_amount"
                 app:layout_constraintTop_toBottomOf="@+id/ingredient_amount" />
@@ -98,7 +98,7 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
                 android:layout_marginBottom="12dp"
-                android:text="Original"
+                android:text="@string/original"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/ingredient_consistency"

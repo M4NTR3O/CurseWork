@@ -6,7 +6,8 @@
     android:background="@color/backgroundColor"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DetailsActivity">
+    tools:context=".DetailsActivity"
+    >
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBar"
@@ -29,8 +30,10 @@
             style="@style/CustomTabTextStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:contentDescription="@android:string/ok"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:tabTextAppearance="@style/CustomTabTextStyle" />
+            app:tabTextAppearance="@style/CustomTabTextStyle"
+            tools:ignore="text" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
