@@ -10,7 +10,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="@string/requestTitle"
-        android:textColor="@android:color/black"
+        android:textColor="@color/itemColor"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/request_icon"

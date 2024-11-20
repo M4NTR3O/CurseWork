@@ -21,7 +21,7 @@
     <string name="loremIpsum" translatable="false">Lorem ipsum </string>
     <string name="error">Error</string>
     <string name="share">share</string>
-    <string name="recipesbottomsheet">RecipesBottomSheet</string>
+    <string name="recipesbottomsheet" translatable="false">RecipesBottomSheet</string>
     <string name="vegetarian">Vegetarian</string>
     <string name="vegan">Vegan</string>
     <string name="gluten_free">Gluten Free</string>

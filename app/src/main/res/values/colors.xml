@@ -33,4 +33,8 @@
     <color name="statusBarColor">@color/colorPrimaryDark</color>
     <color name="contextualStatusBarColor">@color/darker</color>
     <color name="contextualActionBarColor">@color/dark</color>
+
+    <color name="bottomNavBackground">@color/white</color>
+    <color name="bottomNavItemColor">@color/darkGray</color>
+    <color name="bottomNavCheckedItemColor">@color/colorPrimary</color>
 </resources>

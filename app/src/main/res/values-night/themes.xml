@@ -1,7 +1,30 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.CourseWork" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+    <style name="Theme.Foody" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryVariant">@color/colorPrimaryDark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/statusBarColor</item>
+        <!-- Customize your theme here. -->
+        <item name="actionModeBackground">@color/contextualActionBarColor</item>
+        <item name="actionBarStyle">@style/CustomActionBarStyle</item>
+        <item name="bottomNavigationStyle">@style/CustomBottomNavigationViewStyle</item>
     </style>
+
+    <style name="CustomActionBarStyle" parent="Widget.MaterialComponents.ActionBar.Primary">
+        <item name="background">@color/actionBarBackgroundColor</item>
+    </style>
+
+    <style name="CustomBottomNavigationViewStyle" parent="Widget.MaterialComponents.BottomNavigationView">
+        <item name="backgroundTint">@color/bottomNavBackground</item>
+        <item name="itemIconTint">@color/bottomNavItemColor</item>
+        <item name="itemTextColor">@color/bottomNavItemColor</item>
+    </style>
+
 </resources>
