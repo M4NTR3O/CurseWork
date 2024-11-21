@@ -15,6 +15,7 @@ import com.bignerdranch.android.coursework.fragments.RequestListFragment
 import com.bignerdranch.android.coursework.fragments.SearchFragment
 import com.bignerdranch.android.coursework.models.Result
 import com.bignerdranch.android.coursework.requestDatabase.Request
+import java.util.Date
 import java.util.UUID
 
 private const val TAG = "MainActivity"
@@ -68,9 +69,15 @@ class MainActivity : AppCompatActivity(), SearchFragment.Callbacks, RequestListF
         requestListViewModel.deleteRequest(request)
         binding.bottomNavigationView.selectedItemId = R.id.search
         dataModel.message.value = request.text
-        var newRequest = Request()
-        newRequest.text = request.text
-        requestListViewModel.addRequest(newRequest)
+        if (requestListViewModel.getRequest(request).value != null){
+            request.date = Date().time
+            requestListViewModel.updateRequest(request)
+        }
+        else{
+            var newRequest = Request()
+            newRequest.text = request.text
+            requestListViewModel.addRequest(newRequest)
+        }
     }
 
     override fun onRecipeSelected(bundle: Bundle)

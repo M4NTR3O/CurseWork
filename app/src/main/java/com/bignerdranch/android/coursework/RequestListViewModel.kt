@@ -1,5 +1,6 @@
 package com.bignerdranch.android.coursework
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.bignerdranch.android.coursework.requestDatabase.Request
 import com.bignerdranch.android.coursework.requestDatabase.RequestRepository
@@ -10,6 +11,14 @@ class RequestListViewModel: ViewModel() {
 
     fun addRequest(request: Request){
         requestRepository.addRequest(request)
+    }
+
+    fun updateRequest(request: Request){
+        requestRepository.updateRequest(request)
+    }
+
+    fun getRequest(request: Request): LiveData<Request?> {
+        return requestRepository.getRequestName(request.text)
     }
 
     fun deleteRequestCount(){
