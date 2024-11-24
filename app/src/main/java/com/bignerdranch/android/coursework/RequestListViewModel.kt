@@ -20,6 +20,14 @@ class RequestListViewModel: ViewModel() {
         return requestRepository.getRequestText(request.text)
     }
 
+    fun updateRequest(request: Request){
+        requestRepository.updateRequest(request)
+    }
+
+    fun getRequest(request: Request): LiveData<Request?> {
+        return requestRepository.getRequestName(request.text)
+    }
+
     fun deleteRequestCount(){
         requestRepository.deleteRequestCount()
     }
