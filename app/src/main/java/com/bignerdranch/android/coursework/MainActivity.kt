@@ -2,6 +2,7 @@ package com.bignerdranch.android.coursework
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.preference.PreferenceManager
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
@@ -15,6 +16,7 @@ import com.bignerdranch.android.coursework.fragments.RequestListFragment
 import com.bignerdranch.android.coursework.fragments.SearchFragment
 import com.bignerdranch.android.coursework.models.Result
 import com.bignerdranch.android.coursework.requestDatabase.Request
+import com.squareup.picasso.BuildConfig
 import java.util.UUID
 
 private const val TAG = "MainActivity"

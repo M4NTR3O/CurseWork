@@ -21,6 +21,9 @@ import com.bignerdranch.android.coursework.RequestListViewModel
 import com.bignerdranch.android.coursework.databinding.FragmentSearchBinding
 import com.bignerdranch.android.coursework.models.Result
 import com.bignerdranch.android.coursework.requestDatabase.Request
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 private const val TAG = "SearchFragment"
 
@@ -82,7 +85,16 @@ class SearchFragment : Fragment(), RBtnClick {
             requestListViewModel.deleteRequestCount()
             var request = Request()
             request.text = binding.searchQuery.text.toString()
-            requestListViewModel.addRequest(request)
+            CoroutineScope(Dispatchers.IO).launch{
+                val newRequest = requestListViewModel.getRequest(request)
+                if (newRequest != null) {
+                    requestListViewModel.deleteRequest(newRequest)
+                    requestListViewModel.addRequest(request)
+                }
+                else{
+                    requestListViewModel.addRequest(request)
+                }
+            }
         }
     }
 

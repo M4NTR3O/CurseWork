@@ -8,10 +8,14 @@ import java.util.UUID
 
 @Dao
 interface RequestDAO {
-    @Query("SELECT * FROM request LIMIT 10")
+    @Query("SELECT * FROM request ORDER BY date DESC LIMIT 10")
     fun getRequests(): LiveData<List<Request>>
     @Query("SELECT * FROM request WHERE id=(:id)")
     fun getRequest(id: UUID): LiveData<Request?>
+    @Query("UPDATE request SET date=(:date) WHERE id=(:id)")
+    fun updateRequest(id: UUID, date: Long)
+    @Query("SELECT * FROM request WHERE text=(:text) /*ORDER BY date ASC LIMIT 1*/")
+    suspend fun getRequestText(text: String): Request?
     @Insert
     fun addRequest(request: Request)
     @Query("DELETE FROM request WHERE id IN (SELECT id FROM request LIMIT 1) AND (SELECT COUNT(*) FROM request) > 9")

@@ -13,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bignerdranch.android.coursework.DataModel
@@ -20,6 +21,9 @@ import com.bignerdranch.android.coursework.R
 import com.bignerdranch.android.coursework.RequestListViewModel
 import com.bignerdranch.android.coursework.databinding.FragmentMainBinding
 import com.bignerdranch.android.coursework.requestDatabase.Request
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.UUID
 
 
@@ -67,7 +71,16 @@ class MainFragment : Fragment() {
             requestListViewModel.deleteRequestCount()
             var request = Request()
             request.text = binding.searchText.text.toString()
-            requestListViewModel.addRequest(request)
+            CoroutineScope(Dispatchers.IO).launch{
+                val newRequest = requestListViewModel.getRequest(request)
+                if (newRequest != null) {
+                    requestListViewModel.deleteRequest(newRequest)
+                    requestListViewModel.addRequest(request)
+                }
+                else{
+                    requestListViewModel.addRequest(request)
+                }
+            }
         }
     }
 

@@ -21,9 +21,16 @@ class RequestRepository private constructor(context: Context){
 
     fun getRequest(id: UUID): LiveData<Request?> = requestDao.getRequest(id)
 
+    suspend fun getRequestText(text: String): Request? = requestDao.getRequestText(text)
+
     fun addRequest(request: Request){
         executor.execute {
             requestDao.addRequest(request)
+        }
+    }
+    fun updateRequest(request: Request){
+        executor.execute {
+            requestDao.updateRequest(request.id, request.date)
         }
     }
 
