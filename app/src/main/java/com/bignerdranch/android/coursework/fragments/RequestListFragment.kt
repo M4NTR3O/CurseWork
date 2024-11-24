@@ -104,7 +104,7 @@ class RequestListFragment() : Fragment() {
             binding.requestRecyclerView.visibility = View.GONE
             binding.composeContainer.visibility = View.VISIBLE
             binding.composeContainer.setContent {
-                InternetStatusFragment(requireContext())
+                InternetStatusFragment()
             }
         }
     }
@@ -161,27 +161,11 @@ class RequestListFragment() : Fragment() {
     }
 
     @Composable
-    fun InternetStatusFragment(context: Context) {
-        // Состояние для подключения
-        val internetStateFlow = remember { MutableStateFlow(isInternetAvailable(context)) }
-        val isInternetAvailable by internetStateFlow.asStateFlow().collectAsState()
-
-        // Запускаем проверку подключения с интервалом
-        LaunchedEffect(Unit) {
-            launch {
-                while (true) {
-                    internetStateFlow.value = isInternetAvailable(context)
-                    kotlinx.coroutines.delay(1000) // Проверка каждые 3 секунды
-                }
-            }
-        }
-
-        // Интерфейс
+    fun InternetStatusFragment() {
         Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ) {
-            // Если интернета нет
             Surface(
                 color = MaterialTheme.colorScheme.errorContainer,
                 tonalElevation = 4.dp
