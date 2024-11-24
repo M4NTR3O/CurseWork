@@ -23,4 +23,6 @@
     <string name="overview">Обзор</string>
     <string name="ingredients">Ингредиенты</string>
     <string name="instruction">Инструкция</string>
+    <string name="details">Подробности</string>
+    <string name="noConnection">Нет подключения к интернету</string>
 </resources>

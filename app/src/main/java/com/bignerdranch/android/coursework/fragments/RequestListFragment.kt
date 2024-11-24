@@ -1,6 +1,10 @@
 package com.bignerdranch.android.coursework.fragments
 
 import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,6 +12,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.BasicText
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +41,9 @@ import com.bignerdranch.android.coursework.RequestListViewModel
 import com.bignerdranch.android.coursework.databinding.FragmentMainBinding
 import com.bignerdranch.android.coursework.databinding.FragmentRequestListBinding
 import com.bignerdranch.android.coursework.requestDatabase.Request
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import java.util.UUID
 
 // TODO: Rename parameter arguments, choose names that match
@@ -44,15 +69,48 @@ class RequestListFragment() : Fragment() {
             RequestListViewModel by lazy {
         ViewModelProviders.of(this).get(RequestListViewModel::class.java)
     }
+    private lateinit var connectivityManager: ConnectivityManager
+    private lateinit var networkCallback: ConnectivityManager.NetworkCallback
     override fun onAttach(context: Context) {
         super.onAttach(context)
         callbacks = context as Callbacks?
+
+        connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        networkCallback = object : ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: Network) {
+                super.onAvailable(network)
+                requireActivity().runOnUiThread {
+                    updateUI(true)
+                }
+            }
+
+            override fun onLost(network: Network) {
+                super.onLost(network)
+                requireActivity().runOnUiThread {
+                    updateUI(false)
+                }
+            }
+        }
     }
 
+    private fun updateUI(isConnected: Boolean) {
+        if (isConnected) {
+            binding.requestRecyclerView.layoutManager = LinearLayoutManager(context)
+            binding.requestRecyclerView.adapter = adapter
+            binding.requestRecyclerView.visibility = View.VISIBLE
+            binding.composeContainer.visibility = View.GONE
+        } else {
+            binding.requestRecyclerView.visibility = View.GONE
+            binding.composeContainer.visibility = View.VISIBLE
+            binding.composeContainer.setContent {
+                InternetStatusFragment(requireContext())
+            }
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
-        Log.d(TAG, "Оно пыталось...")
     }
 
 
@@ -62,10 +120,22 @@ class RequestListFragment() : Fragment() {
     ): View? {
         Log.d(TAG, "Оно пыталось...")
         binding = FragmentRequestListBinding.inflate(inflater, container, false)
-        binding.requestRecyclerView.layoutManager = LinearLayoutManager(context)
-        binding.requestRecyclerView.adapter = adapter
+        val isConnected = isInternetAvailable(requireContext())
+        updateUI(isConnected)
         return binding.root
     }
+
+    override fun onStart() {
+        super.onStart()
+        val networkRequest = NetworkRequest.Builder().build()
+        connectivityManager.registerNetworkCallback(networkRequest, networkCallback)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        connectivityManager.unregisterNetworkCallback(networkCallback)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requestListViewModel.requestListLiveData.observe(
@@ -76,13 +146,62 @@ class RequestListFragment() : Fragment() {
                     adapter = RequestAdapter(requests)
                     binding.requestRecyclerView.adapter = adapter
                     binding.requestRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-                    binding.requestRecyclerView.visibility = View.VISIBLE
+                    if (isInternetAvailable(requireContext())){
+                        binding.requestRecyclerView.visibility = View.VISIBLE
+                    }
+                    else{
+                        binding.requestRecyclerView.visibility = View.GONE
+                    }
                 }
             })
     }
     override fun onDetach() {
         super.onDetach()
         callbacks = null
+    }
+
+    @Composable
+    fun InternetStatusFragment(context: Context) {
+        // Состояние для подключения
+        val internetStateFlow = remember { MutableStateFlow(isInternetAvailable(context)) }
+        val isInternetAvailable by internetStateFlow.asStateFlow().collectAsState()
+
+        // Запускаем проверку подключения с интервалом
+        LaunchedEffect(Unit) {
+            launch {
+                while (true) {
+                    internetStateFlow.value = isInternetAvailable(context)
+                    kotlinx.coroutines.delay(1000) // Проверка каждые 3 секунды
+                }
+            }
+        }
+
+        // Интерфейс
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            // Если интернета нет
+            Surface(
+                color = MaterialTheme.colorScheme.errorContainer,
+                tonalElevation = 4.dp
+            ) {
+                Text(
+                    text = getString(R.string.noConnection),
+                    color = MaterialTheme.colorScheme.onErrorContainer,
+                    fontSize = 18.sp,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
+        }
+    }
+
+    fun isInternetAvailable(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val network = connectivityManager.activeNetwork ?: return false
+        val networkCapabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+        return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
     }
 
     private inner class RequestHolder(view: View) : RecyclerView.ViewHolder(view), View.OnClickListener {

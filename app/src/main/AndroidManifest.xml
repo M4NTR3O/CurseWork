@@ -22,7 +22,7 @@
         <activity
             android:name=".DetailsActivity"
             android:exported="false"
-            android:label="Details"
+            android:label="@string/details"
             android:theme="@style/DetailsActivityStyle"
             />
         <activity
