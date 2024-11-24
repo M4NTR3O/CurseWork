@@ -28,18 +28,7 @@ class RequestRepository private constructor(context: Context){
             requestDao.addRequest(request)
         }
     }
-    fun updateRequest(request: Request){
-        executor.execute {
-            requestDao.updateRequest(request.id, request.date)
-        }
-    }
 
-    fun getRequestName(text: String): LiveData<Request?> = requestDao.getRequestName(text)
-    fun updateRequest(request: Request){
-        executor.execute {
-            requestDao.updateRequest(request.text, request.date)
-        }
-    }
 
     fun deleteRequest(request: Request){
         executor.execute {
